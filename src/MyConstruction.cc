@@ -50,11 +50,11 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
                                    true); 
 
     // Build Holder
-    G4VisAttributes* visAttributesHolder = new G4VisAttributes(G4Colour(1., 0.8, 0.6));
+    G4VisAttributes* visAttributesHolder = new G4VisAttributes(G4Colour(1., 0., 0.));
     visAttributesHolder->SetVisibility(true);
     visAttributesHolder->SetForceSolid(true);
 
-    G4double holderInnerRadius = 1.4*cm;
+    G4double holderInnerRadius = 0*cm;
     G4double holderOuterRadius = 5*cm;
     G4double holderHeight      = 0.4*cm;
 
@@ -71,7 +71,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
                                       "logicHolder");
 
     physHolder = new G4PVPlacement(0,
-                                   G4ThreeVector(0.,0., holderHeight+5*cm),
+                                   G4ThreeVector(0.,0., holderHeight-20*cm),
                                    logicHolder,
                                    "physHolder",
                                    logicWorld,
@@ -82,31 +82,175 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
     
     logicHolder->SetVisAttributes(visAttributesHolder);
 
+    solidTube = new G4Tubs("solidTube",
+                           3.3*mm,
+                           5.5*mm,
+                           9*mm,
+                           0.*deg,
+                           360.*deg);
+
+    logicTube = new G4LogicalVolume(solidTube,
+                                    PLA,
+                                    "logicTube");
+
+    physTube = new G4PVPlacement(0,
+                                 G4ThreeVector(0., 0., (2*holderHeight)-20*cm+9*mm),
+                                 logicTube,
+                                 "logicTube",
+                                 logicWorld,
+                                 false,
+                                 0,
+                                 true);
+
+    logicTube->SetVisAttributes(visAttributesHolder);
+
+
     // Build Blocks
 
-    G4VisAttributes* visAttributesBlock = new G4VisAttributes(G4Colour(0.1, 0.1, 1.));
+    G4VisAttributes* visAttributesBlock = new G4VisAttributes(G4Colour(0.6, 0.6, 1.));
     visAttributesBlock->SetVisibility(true);
-    visAttributesBlock->SetForceSolid(true);
+    visAttributesBlock->SetForceWireframe(true);
+    visAttributesBlock->SetForceAuxEdgeVisible(true);
 
-    solidBlock = new G4Box("solidBlock",
-                            15*cm,
-                            15*cm,
+    solidBlockBottom = new G4Box("solidBlockBottom",
+                            10*cm,
+                            10*cm,
                             2.5*cm);
 
-    logicBlock = new G4LogicalVolume(solidBlock,
+    logicBlockBottom = new G4LogicalVolume(solidBlockBottom,
                                      Pb,
-                                     "logicBlock");
+                                     "logicBlockBottom");
 
-    physBlock = new G4PVPlacement(0,
-                                   G4ThreeVector(0,0,2.5*cm),
-                                   logicBlock,
-                                   "physBlock",
+    physBlockBottom = new G4PVPlacement(0,
+                                   G4ThreeVector(0,0,-22.5*cm),
+                                   logicBlockBottom,
+                                   "physBlockBottom",
                                    logicWorld,
                                    false,
                                    0,
                                    true); 
 
-    logicBlock->SetVisAttributes(visAttributesBlock);
+    logicBlockBottom->SetVisAttributes(visAttributesBlock);
+
+
+    solidBlockSide1 = new G4Box("solidBlockSide1",
+                            2.5*cm,
+                            12.5*cm,
+                            15*cm);
+
+    logicBlockSide1 = new G4LogicalVolume(solidBlockSide1,
+                                     Pb,
+                                     "logicBlockSide1");
+
+    G4RotationMatrix *rot1 = new G4RotationMatrix();
+    rot1->rotateZ(0*deg);
+    physBlockSide1 = new G4PVPlacement(rot1,
+                                   G4ThreeVector(12.5*cm,2.5*cm,-10*cm),
+                                   logicBlockSide1,
+                                   "physBlockSide1",
+                                   logicWorld,
+                                   false,
+                                   0,
+                                   true); 
+
+    logicBlockSide1->SetVisAttributes(visAttributesBlock);
+
+
+    solidBlockSide2 = new G4Box("solidBlockSide2",
+                            2.5*cm,
+                            12.5*cm,
+                            15*cm);
+
+    logicBlockSide2 = new G4LogicalVolume(solidBlockSide2,
+                                     Pb,
+                                     "logicBlockSide2");
+
+    G4RotationMatrix *rot2 = new G4RotationMatrix();
+    rot2->rotateZ(90*deg);
+    physBlockSide2 = new G4PVPlacement(rot2,
+                                   G4ThreeVector(2.5*cm,-12.5*cm,-10*cm),
+                                   logicBlockSide2,
+                                   "physBlockSide2",
+                                   logicWorld,
+                                   false,
+                                   0,
+                                   true); 
+
+    logicBlockSide2->SetVisAttributes(visAttributesBlock);
+
+
+    solidBlockSide3 = new G4Box("solidBlockSide3",
+                            2.5*cm,
+                            12.5*cm,
+                            15*cm);
+
+    logicBlockSide3 = new G4LogicalVolume(solidBlockSide3,
+                                     Pb,
+                                     "logicBlockSide3");
+
+    G4RotationMatrix *rot3 = new G4RotationMatrix();
+    rot3->rotateZ(0*deg);
+    physBlockSide3 = new G4PVPlacement(rot3,
+                                   G4ThreeVector(-12.5*cm,-2.5*cm,-10*cm),
+                                   logicBlockSide3,
+                                   "physBlockSide3",
+                                   logicWorld,
+                                   false,
+                                   0,
+                                   true); 
+
+    logicBlockSide3->SetVisAttributes(visAttributesBlock);
+
+
+    solidBlockSide4 = new G4Box("solidBlockSide4",
+                            2.5*cm,
+                            12.5*cm,
+                            15*cm);
+
+    logicBlockSide4 = new G4LogicalVolume(solidBlockSide4,
+                                     Pb,
+                                     "logicBlockSide4");
+
+    G4RotationMatrix *rot4 = new G4RotationMatrix();
+    rot4->rotateZ(90*deg);
+    physBlockSide4 = new G4PVPlacement(rot4,
+                                   G4ThreeVector(-2.5*cm,12.5*cm,-10*cm),
+                                   logicBlockSide4,
+                                   "physBlockSide4",
+                                   logicWorld,
+                                   false,
+                                   0,
+                                   true); 
+
+    logicBlockSide4->SetVisAttributes(visAttributesBlock);
+
+
+    // Build Cylinder
+
+    solidCylinder = new G4Tubs("solidCylinder",
+                           6.5*cm,
+                           7.5*cm,
+                           10*cm,
+                           0.*deg,
+                           360.*deg);
+
+    logicCylinder = new G4LogicalVolume(solidCylinder,
+                                    Pb,
+                                    "logicCylinder");
+
+    physCylinder = new G4PVPlacement(0,
+                                 G4ThreeVector(0., 0., -20*cm+10*cm),
+                                 logicCylinder,
+                                 "logicCylinder",
+                                 logicWorld,
+                                 false,
+                                 0,
+                                 true);
+
+    logicCylinder->SetVisAttributes(visAttributesBlock);
+
+
+
 
     // Build Floor
 
@@ -118,7 +262,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
     solidFloor = new G4Box("solidFloor",
                            xWorld,
                            yWorld,
-                           0.25*m
+                           0.125*m
                           );
 
     logicFloor = new G4LogicalVolume(solidFloor,
@@ -127,7 +271,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
                                     );
 
     physFloor = new G4PVPlacement(0,
-                                  G4ThreeVector(0., 0., -0.25*m),
+                                  G4ThreeVector(0., 0., -0.375*m),
                                   logicFloor,
                                   "physFloor",
                                   logicWorld,
@@ -141,10 +285,39 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
 
     // Build Cube
 
+    G4VisAttributes* visAttributesCube = new G4VisAttributes(G4Colour(1, 1, 1, 0.8));
+    visAttributesCube->SetVisibility(true);
+    visAttributesCube->SetForceSolid(true);
+
+
+    solidCube = new G4Box("solidCube",
+                          0.5*cm,
+                          0.5*cm,
+                          0.5*cm);
+
+    logicCube = new G4LogicalVolume(solidCube,
+                                    LiF,
+                                    "logicCube");
+
+    physCube = new G4PVPlacement(0,
+                                 G4ThreeVector(4*cm, 0., -20*cm + (2*holderHeight) + 0.5*cm ),
+                                 logicCube,
+                                 "logicCube",
+                                 logicWorld,
+                                 false,
+                                 0,
+                                 true);
+
+    logicCube->SetVisAttributes(visAttributesCube);
 
 
     return physWorld;
 }
 
-// void MyDetectorConstruction::ConstructSDandField(){
-// }
+void MyDetectorConstruction::ConstructSDandField(){
+
+    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
+    logicCube->SetSensitiveDetector(sensDet);
+
+}
+

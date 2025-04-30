@@ -14,6 +14,8 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
+#include "MyDetector.hh"
+
 class MyDetectorConstruction : public G4VUserDetectorConstruction{
     public:
         MyDetectorConstruction();        
@@ -28,17 +30,30 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
         // Floor  := Concrete floot
         // Cube   := The LiF cube detector
 
-        G4Box *solidWorld, *solidBlock, *solidFloor, *solidCube; 
+        G4LogicalVolume *logicCube;
+        virtual void ConstructSDandField();
+
+        G4Box *solidWorld, *solidFloor, *solidCube;
+        G4Box *solidBlockBottom; 
+        G4Box *solidBlockSide1, *solidBlockSide2, *solidBlockSide3, *solidBlockSide4;
+        G4Tubs *solidCylinder, *solidTube;
         G4Tubs *solidHolder;
 
-        G4LogicalVolume *logicWorld, *logicBlock, *logicFloor, *logicCube;
+        G4LogicalVolume *logicWorld, *logicFloor;
+        G4LogicalVolume *logicBlockBottom; 
+        G4LogicalVolume *logicBlockSide1, *logicBlockSide2, *logicBlockSide3, *logicBlockSide4;
+        G4LogicalVolume *logicCylinder, *logicTube;
         G4LogicalVolume *logicHolder;
 
-        G4VPhysicalVolume *physWorld, *physBlock, *physFloor, *physCube;
+        G4VPhysicalVolume *physWorld, *physFloor, *physCube;
+        G4VPhysicalVolume *physBlockBottom;
+        G4VPhysicalVolume *physBlockSide1, *physBlockSide2, *physBlockSide3, *physBlockSide4;
+        G4VPhysicalVolume *physCylinder, *physTube;
         G4VPhysicalVolume *physHolder; 
 
         // Material definitions
         G4Material *Air, *LiF, *Pb, *PLA, *Concrete;
+
 
         void DefineMaterials();
 };
