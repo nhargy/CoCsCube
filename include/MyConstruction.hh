@@ -30,6 +30,9 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
         // Floor  := Concrete floot
         // Cube   := The LiF cube detector
 
+        // Messenger variables
+        G4double CubeDistance, CubeSide;
+
         G4LogicalVolume *logicCube;
         virtual void ConstructSDandField();
 
@@ -53,9 +56,9 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
 
         // Material definitions
         G4Material *Air, *LiF, *Pb, *PLA, *Concrete;
-
-
         void DefineMaterials();
+
+        G4GenericMessenger *fMessengerCube;
 };
 
 #endif

@@ -3,6 +3,11 @@
 /vis/viewer/set/upVector 0 0 1
 /vis/viewer/set/autoRefresh true
 
+/MyCube/CubeDistance 2.7
+/MyCube/CubeSide 0.25
+
+/MySource/SourceHeight 1.0
+
 /run/initialize
 
 /vis/drawVolume

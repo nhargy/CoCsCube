@@ -3,6 +3,7 @@
 
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
+#include "G4GenericMessenger.hh"
 
 class G4Event;
 
@@ -15,6 +16,9 @@ public:
 
 private:
     G4ParticleGun* fParticleGun;
+
+    G4double SourceHeight;
+    G4GenericMessenger *fMessengerSource;
 };
 
 #endif

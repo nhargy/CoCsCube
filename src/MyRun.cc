@@ -37,7 +37,7 @@ void MyRunAction::BeginOfRunAction(const G4Run* run){
     std::stringstream strRunID;
     strRunID << runID;
 
-    man->SetFileName("output"+strRunID.str()+".csv");
+    man->SetFileName("WISCO"+strRunID.str()+".csv");
     man->OpenFile();
 
 }

@@ -2,11 +2,25 @@
 
 MyDetectorConstruction::MyDetectorConstruction(){
 
+    fMessengerCube = new G4GenericMessenger(this,
+                                        "/MyCube/",
+                                        "MyCube");
+
+    fMessengerCube->DeclareProperty("CubeDistance",
+                                CubeDistance,
+                                "Distance of cube from source");
+ 
+    fMessengerCube->DeclareProperty("CubeSide",
+                                CubeSide,
+                                "Side dimensions of the cube");
+       
+    CubeDistance = 4.0;
+    CubeSide     = 0.5;
+
     DefineMaterials();
 }
 
-MyDetectorConstruction::~MyDetectorConstruction(){
-}
+MyDetectorConstruction::~MyDetectorConstruction(){}
 
 void MyDetectorConstruction::DefineMaterials(){
 
@@ -291,16 +305,16 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct(){
 
 
     solidCube = new G4Box("solidCube",
-                          0.5*cm,
-                          0.5*cm,
-                          0.5*cm);
+                          CubeSide*cm,
+                          CubeSide*cm,
+                          CubeSide*cm);
 
     logicCube = new G4LogicalVolume(solidCube,
                                     LiF,
                                     "logicCube");
 
     physCube = new G4PVPlacement(0,
-                                 G4ThreeVector(4*cm, 0., -20*cm + (2*holderHeight) + 0.5*cm ),
+                                 G4ThreeVector(CubeDistance*cm, 0., -20*cm + (2*holderHeight) + CubeSide*cm ),
                                  logicCube,
                                  "logicCube",
                                  logicWorld,
