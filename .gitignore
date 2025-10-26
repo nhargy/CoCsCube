@@ -1,2 +1,5 @@
 /build/
 /data/
+
+.idea/
+.ipynb_checkpoints/
